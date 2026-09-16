@@ -1,0 +1,220 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: white;
+    color: black;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* ================================
+   Title
+================================ */
+
+h1 {
+    position: absolute;
+
+    top: 30px;
+    left: 0;
+
+    width: 100%;
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 32px;
+    font-weight: normal;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+
+
+/* ================================
+   Shelf link
+================================ */
+
+.shelf-link {
+    position: absolute;
+
+    top: 30px;
+    right: 40px;
+
+    color: black;
+
+    text-decoration: none;
+
+    font-size: 18px;
+
+    z-index: 20;
+}
+
+.shelf-link:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================
+   Horizontal slider
+================================ */
+
+.slider {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+
+    touch-action: pan-x;
+
+    cursor: grab;
+}
+
+.slider::-webkit-scrollbar {
+    display: none;
+}
+
+.slider.dragging {
+    cursor: grabbing;
+
+    scroll-behavior: auto;
+}
+
+
+/* ================================
+   Object pages
+================================ */
+
+.object-page {
+    min-width: 100vw;
+    width: 100vw;
+
+    height: 100vh;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    scroll-snap-align: center;
+}
+
+
+/* ================================
+   Objects
+================================ */
+
+.object-image {
+    width: 400px;
+    height: 600px;
+
+    max-width: 70vw;
+    max-height: 70vh;
+
+    object-fit: contain;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Small hover effect on desktop */
+
+@media (hover: hover) {
+
+    .object-image:hover {
+        transform: scale(1.02);
+    }
+
+}
+
+
+/* ================================
+   Instruction
+================================ */
+
+.instruction {
+    position: absolute;
+
+    bottom: 30px;
+    left: 0;
+
+    width: 100%;
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 700px) {
+
+    h1 {
+        top: 25px;
+
+        font-size: 26px;
+    }
+
+
+    .shelf-link {
+        top: 25px;
+        right: 20px;
+
+        font-size: 16px;
+    }
+
+
+    .object-image {
+        width: 75vw;
+        height: 65vh;
+
+        max-width: none;
+        max-height: none;
+    }
+
+
+    .instruction {
+        bottom: 20px;
+
+        font-size: 14px;
+    }
+
+}
