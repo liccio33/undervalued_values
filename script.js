@@ -60,7 +60,7 @@ function saveGlassState() {
 // =================================
 
 const glassSound = new Audio(
-    "assets/sounds/glass-break.mp3"
+    "assets/audio/GLASS_418194__deleted_user_3656686__hard-glass-impact.wav"
 );
 
 glassSound.volume = 0.7;
