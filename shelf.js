@@ -16,7 +16,8 @@ const glassImages = [
     "assets/images/glass1.png",
     "assets/images/glass2.png",
     "assets/images/glass3.png",
-    "assets/images/glass4.png"
+    "assets/images/glass4.png",
+    "assets/images/glass5.png"
 ];
 
 
