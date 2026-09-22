@@ -7,9 +7,15 @@ const shelfPlate =
 const shelfFlower =
     document.getElementById("shelfFlower");
 
+const shelfBubble =
+    document.getElementById("shelfBubble");
+
+const shelfPolaroid =
+    document.getElementById("shelfPolaroid");
+
 
 // =================================
-// Glass breaking images
+// Glass images
 // =================================
 
 const glassImages = [
@@ -22,7 +28,45 @@ const glassImages = [
 
 
 // =================================
-// Update glass according to saved state
+// Flower images
+// =================================
+
+const flowerImages = [
+    "assets/images/flower1.png",
+    "assets/images/flower2.png",
+    "assets/images/flower3.png",
+    "assets/images/flower4.png",
+    "assets/images/flower5.png",
+    "assets/images/flower6.png"
+];
+
+
+// =================================
+// Plate images
+// =================================
+
+const plateImages = [
+    "assets/images/plate1.png",
+    "assets/images/plate2.png",
+    "assets/images/plate3.png"
+];
+
+
+// =================================
+// Polaroid images
+// =================================
+
+const polaroidImages = [
+    "assets/images/polaroid1.png",
+    "assets/images/polaroid2.png",
+    "assets/images/polaroid3.png",
+    "assets/images/polaroid4.png",
+    "assets/images/polaroid5.png"
+];
+
+
+// =================================
+// Update shelf glass
 // =================================
 
 function updateShelfGlass() {
@@ -33,7 +77,10 @@ function updateShelfGlass() {
     let glassStage = 0;
 
     if (savedGlassStage !== null) {
-        glassStage = parseInt(savedGlassStage);
+
+        glassStage =
+            parseInt(savedGlassStage);
+
     }
 
     if (
@@ -47,33 +94,165 @@ function updateShelfGlass() {
 }
 
 
+// =================================
+// Update shelf flower
+// =================================
+
+function updateShelfFlower() {
+
+    const savedFlowerStage =
+        localStorage.getItem("flowerStage");
+
+    let flowerStage = 0;
+
+    if (savedFlowerStage !== null) {
+
+        flowerStage =
+            parseInt(savedFlowerStage);
+
+    }
+
+    if (
+        flowerStage >= 0 &&
+        flowerStage < flowerImages.length
+    ) {
+        shelfFlower.src =
+            flowerImages[flowerStage];
+    }
+
+}
+
+// =================================
+// Update shelf plate
+// =================================
+
+function updateShelfPlate() {
+
+    const savedPlateStage =
+        localStorage.getItem("plateStage");
+
+    let plateStage = 0;
+
+    if (savedPlateStage !== null) {
+
+        plateStage =
+            parseInt(savedPlateStage);
+
+    }
+
+    if (
+        plateStage >= 0 &&
+        plateStage < plateImages.length
+    ) {
+        shelfPlate.src =
+            plateImages[plateStage];
+    }
+
+}
+
+
+// =================================
+// Update shelf bubble
+// =================================
+function updateShelfBubble() {
+
+    const savedBubbleState =
+        localStorage.getItem("bubbleVisible");
+
+    if (savedBubbleState === "false") {
+
+        shelfBubble.style.visibility =
+            "hidden";
+
+    } else {
+
+        shelfBubble.style.visibility =
+            "visible";
+
+    }
+
+}
+
+
+// =================================
+// Update shelf polaroid
+// =================================
+
+function updateShelfPolaroid() {
+
+    const savedPolaroidStage =
+        localStorage.getItem("polaroidStage");
+
+    let polaroidStage = 0;
+
+    if (savedPolaroidStage !== null) {
+
+        polaroidStage =
+            parseInt(savedPolaroidStage);
+
+    }
+
+    if (
+        polaroidStage >= 0 &&
+        polaroidStage < polaroidImages.length
+    ) {
+        shelfPolaroid.src =
+            polaroidImages[polaroidStage];
+    }
+
+}
+
+
+// =================================
 // Update when opening Shelf
+// =================================
+
 updateShelfGlass();
+updateShelfFlower();
+updateShelfPlate();
+updateShelfBubble();
+updateShelfPolaroid();
 
 
+// =================================
 // Update when returning to Shelf
+// =================================
+
 window.addEventListener(
     "pageshow",
-    updateShelfGlass
+    function () {
+
+        updateShelfGlass();
+        updateShelfFlower();
+        updateShelfPlate();
+        updateShelfBubble();
+        updateShelfPolaroid();
+
+    }
 );
 
 
 // =================================
-// Drag objects
+// Draggable objects
 // =================================
 
 const objects = [
     shelfGlass,
     shelfPlate,
-    shelfFlower
+    shelfFlower,
+    shelfBubble,
+    shelfPolaroid
 ];
 
 
-// ---------------------------------
-// Load saved positions
-// ---------------------------------
+// =================================
+// Load saved position
+// =================================
 
-function loadObjectPosition(object, name) {
+function loadObjectPosition(
+    object,
+    name
+) {
 
     const savedPosition =
         localStorage.getItem(
@@ -91,19 +270,25 @@ function loadObjectPosition(object, name) {
         object.style.top =
             position.top + "px";
 
-        object.style.bottom = "auto";
-        object.style.right = "auto";
+        object.style.bottom =
+            "auto";
+
+        object.style.right =
+            "auto";
 
     }
 
 }
 
 
-// ---------------------------------
+// =================================
 // Save position
-// ---------------------------------
+// =================================
 
-function saveObjectPosition(object, name) {
+function saveObjectPosition(
+    object,
+    name
+) {
 
     const position = {
         left: object.offsetLeft,
@@ -118,11 +303,14 @@ function saveObjectPosition(object, name) {
 }
 
 
-// ---------------------------------
+// =================================
 // Make object draggable
-// ---------------------------------
+// =================================
 
-function makeDraggable(object, name) {
+function makeDraggable(
+    object,
+    name
+) {
 
     let dragging = false;
 
@@ -164,7 +352,8 @@ function makeDraggable(object, name) {
             object.style.top =
                 rect.top + "px";
 
-            object.style.zIndex = 10;
+            object.style.zIndex =
+                10;
 
         }
     );
@@ -176,15 +365,11 @@ function makeDraggable(object, name) {
 
             if (!dragging) return;
 
-
             let newLeft =
                 event.clientX - offsetX;
 
             let newTop =
                 event.clientY - offsetY;
-
-
-            // Keep object inside screen
 
             const maxLeft =
                 window.innerWidth -
@@ -194,19 +379,23 @@ function makeDraggable(object, name) {
                 window.innerHeight -
                 object.offsetHeight;
 
-
             newLeft =
                 Math.max(
                     0,
-                    Math.min(newLeft, maxLeft)
+                    Math.min(
+                        newLeft,
+                        maxLeft
+                    )
                 );
 
             newTop =
                 Math.max(
                     0,
-                    Math.min(newTop, maxTop)
+                    Math.min(
+                        newTop,
+                        maxTop
+                    )
                 );
-
 
             object.style.left =
                 newLeft + "px";
@@ -242,8 +431,6 @@ function makeDraggable(object, name) {
     );
 
 
-    // Load previous position
-
     loadObjectPosition(
         object,
         name
@@ -269,4 +456,14 @@ makeDraggable(
 makeDraggable(
     shelfFlower,
     "flower"
+);
+
+makeDraggable(
+    shelfBubble,
+    "bubble"
+);
+
+makeDraggable(
+    shelfPolaroid,
+    "polaroid"
 );

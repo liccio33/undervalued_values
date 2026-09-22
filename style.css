@@ -84,6 +84,8 @@ h1 {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
 
+    will-change: scroll-position;
+
     scrollbar-width: none;
 
     touch-action: pan-x;
