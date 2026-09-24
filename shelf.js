@@ -13,6 +13,15 @@ const shelfBubble =
 const shelfPolaroid =
     document.getElementById("shelfPolaroid");
 
+const shelfCan =
+    document.getElementById("shelfCan");
+
+const shelfPaper =
+    document.getElementById("shelfPaper");
+
+const shelfTeddy =
+    document.getElementById("shelfTeddy");
+
 
 // =================================
 // Glass images
@@ -63,6 +72,41 @@ const polaroidImages = [
     "assets/images/polaroid4.png",
     "assets/images/polaroid5.png"
 ];
+
+
+// =================================
+// Can images
+// =================================
+
+const canImages = [
+    "assets/images/can1.png",
+    "assets/images/can2.png",
+    "assets/images/can3.png"
+];
+
+
+// =================================
+// Paper images
+// =================================
+
+const paperImages = [
+    "assets/images/paper1.png",
+    "assets/images/paper2.png",
+    "assets/images/paper3.png",
+    "assets/images/paper4.png"
+];
+
+
+// =================================
+// Teddy images
+// =================================
+
+const teddyImages = [
+    "assets/images/teddy1.png",
+    "assets/images/teddy2.png",
+    "assets/images/teddy3.png"
+];
+
 
 
 // =================================
@@ -204,6 +248,94 @@ function updateShelfPolaroid() {
 
 
 // =================================
+// Update shelf can
+// =================================
+
+function updateShelfCan() {
+
+    const savedCanStage =
+        localStorage.getItem("canStage");
+
+    let canStage = 0;
+
+    if (savedCanStage !== null) {
+
+        canStage =
+            parseInt(savedCanStage);
+
+    }
+
+    if (
+        canStage >= 0 &&
+        canStage < canImages.length
+    ) {
+        shelfCan.src =
+            canImages[canStage];
+    }
+
+}
+
+
+// =================================
+// Update shelf paper
+// =================================
+
+function updateShelfPaper() {
+
+    const savedPaperStage =
+        localStorage.getItem("paperStage");
+
+    let paperStage = 0;
+
+    if (savedPaperStage !== null) {
+
+        paperStage =
+            parseInt(savedPaperStage);
+
+    }
+
+    if (
+        paperStage >= 0 &&
+        paperStage < paperImages.length
+    ) {
+        shelfPaper.src =
+            paperImages[paperStage];
+    }
+
+}
+
+
+// =================================
+// Update shelf teddy
+// =================================
+
+function updateShelfTeddy() {
+
+    const savedTeddyStage =
+        localStorage.getItem("teddyStage");
+
+    let teddyStage = 0;
+
+    if (savedTeddyStage !== null) {
+
+        teddyStage =
+            parseInt(savedTeddyStage);
+
+    }
+
+    if (
+        teddyStage >= 0 &&
+        teddyStage < teddyImages.length
+    ) {
+        shelfTeddy.src =
+            teddyImages[teddyStage];
+    }
+
+}
+
+
+
+// =================================
 // Update when opening Shelf
 // =================================
 
@@ -212,6 +344,9 @@ updateShelfFlower();
 updateShelfPlate();
 updateShelfBubble();
 updateShelfPolaroid();
+updateShelfCan();
+updateShelfPaper();
+updateShelfTeddy();
 
 
 // =================================
@@ -227,6 +362,9 @@ window.addEventListener(
         updateShelfPlate();
         updateShelfBubble();
         updateShelfPolaroid();
+        updateShelfCan();
+        updateShelfPaper();
+        updateShelfTeddy();
 
     }
 );
@@ -241,7 +379,10 @@ const objects = [
     shelfPlate,
     shelfFlower,
     shelfBubble,
-    shelfPolaroid
+    shelfPolaroid,
+    shelfCan,
+    shelfPaper,
+    shelfTeddy
 ];
 
 
@@ -466,4 +607,19 @@ makeDraggable(
 makeDraggable(
     shelfPolaroid,
     "polaroid"
+);
+
+makeDraggable(
+    shelfCan,
+    "can"
+);
+
+makeDraggable(
+    shelfPaper,
+    "paper"
+);
+
+makeDraggable(
+    shelfTeddy,
+    "teddy"
 );

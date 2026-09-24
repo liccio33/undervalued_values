@@ -10,7 +10,14 @@ body {
     width: 100%;
     height: 100%;
 
-    background: white;
+    background-image:
+        url("assets/images/5.png");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        
 
     overflow: hidden;
 }
@@ -114,11 +121,11 @@ body {
 ================================ */
 
 .plate {
-    width: 110px;
-    height: 90px;
+    width: 150px;
+    height: 100px;
 
     left: 48%;
-    bottom: 28%;
+    bottom: 58%;
 }
 
 
@@ -130,8 +137,8 @@ body {
     width: 90px;
     height: 120px;
 
-    right: 20%;
-    bottom: 28%;
+    right: 70%;
+    bottom: 55%;
 }
 
 
@@ -144,7 +151,7 @@ body {
     height: 90px;
 
     left: 38%;
-    bottom: 28%;
+    bottom: 68%;
 }
 
 
@@ -155,10 +162,45 @@ body {
     width: 90px;
     height: auto;
 
-    left: 70%;
-    bottom: 28%;
+    left: 60%;
+    bottom: 58%;
 }
 
+
+/* ================================
+   Can
+================================ */
+.can {
+    width: 100px;
+    height: auto;
+
+    left: 53%;
+    bottom: 51%;
+}
+
+
+/* ================================
+   Paper
+================================ */
+.paper {
+    width: 80px;
+    height: auto;
+
+    left: 42%;
+    bottom: 46%;
+}
+
+
+/* ================================
+   Teddy
+================================ */
+.teddy {
+    width: 125px;
+    height: auto;
+
+    left: 50%;
+    bottom: 40%;
+}
 
 /* ================================
    Mobile

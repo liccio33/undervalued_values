@@ -5,6 +5,9 @@ const flower = document.getElementById("flower");
 const plate = document.getElementById("plate");
 const bubble = document.getElementById("bubble");
 const polaroid = document.getElementById("polaroid");
+const can = document.getElementById("can");
+const paper = document.getElementById("paper");
+const teddy = document.getElementById("teddy");
 
 
 // =================================
@@ -30,6 +33,30 @@ const firstPageClone =
 
 const lastPageClone =
     lastOriginalPage.cloneNode(true);
+
+
+// =================================
+// Remove IDs from cloned pages
+// =================================
+
+function removeCloneIds(page) {
+
+    const elements =
+        page.querySelectorAll("[id]");
+
+    elements.forEach(
+        function (element) {
+
+            element.removeAttribute("id");
+
+        }
+    );
+
+}
+
+
+removeCloneIds(firstPageClone);
+removeCloneIds(lastPageClone);
 
 
 slider.insertBefore(
@@ -230,7 +257,7 @@ const bubbleImage =
     "assets/images/bubble1.png";
 
 
-    // =================================
+// =================================
 // Polaroid images
 // =================================
 
@@ -244,6 +271,41 @@ const polaroidImages = [
 
 
 // =================================
+// Can images
+// =================================
+
+const canImages = [
+    "assets/images/can1.png",
+    "assets/images/can2.png",
+    "assets/images/can3.png"
+];
+
+
+// =================================
+// Paper images
+// =================================
+
+const paperImages = [
+    "assets/images/paper1.png",
+    "assets/images/paper2.png",
+    "assets/images/paper3.png",
+    "assets/images/paper4.png"
+];
+
+
+// =================================
+// Teddy images
+// =================================
+
+const teddyImages = [
+    "assets/images/teddy1.png",
+    "assets/images/teddy2.png",
+    "assets/images/teddy3.png"
+];
+
+
+
+// =================================
 // Current stages
 // =================================
 
@@ -252,6 +314,9 @@ let flowerStage = 0;
 let plateStage = 0;
 let bubbleVisible = true;
 let polaroidStage = 0;
+let canStage = 0;
+let paperStage = 0;
+let teddyStage = 0;
 
 
 // =================================
@@ -364,6 +429,76 @@ if (savedPolaroidStage !== null) {
 
 
 // =================================
+// Load can state
+// =================================
+
+const savedCanStage =
+    localStorage.getItem("canStage");
+
+if (savedCanStage !== null) {
+
+    canStage =
+        parseInt(savedCanStage);
+
+    if (
+        canStage >= 0 &&
+        canStage < canImages.length
+    ) {
+        can.src =
+            canImages[canStage];
+    }
+
+}
+
+
+// =================================
+// Load paper state
+// =================================
+
+const savedPaperStage =
+    localStorage.getItem("paperStage");
+
+if (savedPaperStage !== null) {
+
+    paperStage =
+        parseInt(savedPaperStage);
+
+    if (
+        paperStage >= 0 &&
+        paperStage < paperImages.length
+    ) {
+        paper.src =
+            paperImages[paperStage];
+    }
+
+}
+
+
+// =================================
+// Load teddy state
+// =================================
+
+const savedTeddyStage =
+    localStorage.getItem("teddyStage");
+
+if (savedTeddyStage !== null) {
+
+    teddyStage =
+        parseInt(savedTeddyStage);
+
+    if (
+        teddyStage >= 0 &&
+        teddyStage < teddyImages.length
+    ) {
+        teddy.src =
+            teddyImages[teddyStage];
+    }
+
+}
+
+
+
+// =================================
 // Save glass state
 // =================================
 
@@ -434,6 +569,49 @@ function savePolaroidState() {
 
 
 // =================================
+// Save can state
+// =================================
+
+function saveCanState() {
+
+    localStorage.setItem(
+        "canStage",
+        canStage
+    );
+
+}
+
+
+// =================================
+// Save paper state
+// =================================
+
+function savePaperState() {
+
+    localStorage.setItem(
+        "paperStage",
+        paperStage
+    );
+
+}
+
+
+// =================================
+// Save teddy state
+// =================================
+
+function saveTeddyState() {
+
+    localStorage.setItem(
+        "teddyStage",
+        teddyStage
+    );
+
+}
+
+
+
+// =================================
 // Glass sound
 // =================================
 
@@ -486,6 +664,40 @@ const polaroidSound = new Audio(
 );
 
 polaroidSound.volume = 0.7;
+
+
+// =================================
+// Can sound
+// =================================
+
+const canSound = new Audio(
+    "assets/audio/CAN_405648__apinasaundi__found-can-crush-1.wav"
+);
+
+canSound.volume = 0.7;
+
+
+// =================================
+// Paper sound
+// =================================
+
+const paperSound = new Audio(
+    "assets/audio/PAPER_197179__razrox__paper-crumpled-001.wav"
+);
+
+paperSound.volume = 0.7;
+
+
+// =================================
+// Teddy sound
+// =================================
+
+const teddySound = new Audio(
+    "assets/audio/TEDDY_263541__dpoggioli__cloth-rip.wav"
+);
+
+teddySound.volume = 0.7;
+
 
 
 // =================================
@@ -632,6 +844,95 @@ polaroid.addEventListener(
 
 
 // =================================
+// Click can to crush
+// =================================
+
+can.addEventListener(
+    "click",
+    function () {
+
+        if (
+            canStage <
+            canImages.length - 1
+        ) {
+
+            canStage++;
+
+            can.src =
+                canImages[canStage];
+
+            saveCanState();
+
+            canSound.currentTime = 0;
+            canSound.play();
+
+        }
+
+    }
+);
+
+
+// =================================
+// Click teddy to tear
+// =================================
+
+teddy.addEventListener(
+    "click",
+    function () {
+
+        if (
+            teddyStage <
+            teddyImages.length - 1
+        ) {
+
+            teddyStage++;
+
+            teddy.src =
+                teddyImages[teddyStage];
+
+            saveTeddyState();
+
+            teddySound.currentTime = 0;
+            teddySound.play();
+
+        }
+
+    }
+);
+
+
+
+// =================================
+// Click paper to crumple
+// =================================
+
+paper.addEventListener(
+    "click",
+    function () {
+
+        if (
+            paperStage <
+            paperImages.length - 1
+        ) {
+
+            paperStage++;
+
+            paper.src =
+                paperImages[paperStage];
+
+            savePaperState();
+
+            paperSound.currentTime = 0;
+            paperSound.play();
+
+        }
+
+    }
+);
+
+
+
+// =================================
 // Mouse dragging slider
 // =================================
 
@@ -667,7 +968,7 @@ slider.addEventListener(
         if (!isDragging) return;
 
         const distance =
-            event.pageX - startX;
+            (event.pageX - startX) ;
 
         slider.scrollLeft =
             startScrollLeft - distance;
@@ -706,6 +1007,7 @@ slider.addEventListener(
 
     }
 );
+
 
 
 // =================================
@@ -757,6 +1059,8 @@ function snapToObject() {
     );
 
 }
+
+
 
 
 // =================================
