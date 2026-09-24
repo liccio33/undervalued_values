@@ -1,4 +1,6 @@
 const slider = document.getElementById("slider");
+const leftArrow = document.getElementById("leftArrow");
+const rightArrow = document.getElementById("rightArrow");
 
 const glass = document.getElementById("glass");
 const flower = document.getElementById("flower");
@@ -1060,6 +1062,85 @@ function snapToObject() {
 
 }
 
+
+// =================================
+// Click slider arrows
+// =================================
+
+function moveToAdjacentPage(
+    direction
+) {
+
+    const pageWidth =
+        window.innerWidth;
+
+    const currentIndex =
+        Math.round(
+            slider.scrollLeft /
+            pageWidth
+        );
+
+    const nextIndex =
+        currentIndex + direction;
+
+    slider.scrollTo({
+
+        left:
+            nextIndex * pageWidth,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+// =================================
+// Click left arrow
+// =================================
+
+leftArrow.addEventListener(
+    "mousedown",
+    function (event) {
+
+        event.stopPropagation();
+
+    }
+);
+
+
+leftArrow.addEventListener(
+    "click",
+    function () {
+
+        moveToAdjacentPage(-1);
+
+    }
+);
+
+
+// =================================
+// Click right arrow
+// =================================
+
+rightArrow.addEventListener(
+    "mousedown",
+    function (event) {
+
+        event.stopPropagation();
+
+    }
+);
+
+
+rightArrow.addEventListener(
+    "click",
+    function () {
+
+        moveToAdjacentPage(1);
+
+    }
+);
 
 
 

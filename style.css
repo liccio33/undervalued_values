@@ -62,6 +62,118 @@ h1 {
 }
 
 
+.logo-title {
+    pointer-events: none;
+}
+
+.logo-hover {
+    position: relative;
+
+    display: inline-block;
+
+    pointer-events: auto;
+}
+
+.logo-image {
+    display: block;
+
+    position: relative;
+    z-index: 1;
+
+    margin: 0 auto;
+}
+
+.logo-glitch {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 220px;
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
+    opacity: 0;
+    visibility: hidden;
+
+    z-index: 2;
+    pointer-events: none;
+}
+
+.logo-title:hover .logo-glitch {
+    opacity: 1;
+    visibility: visible;
+
+    animation:
+        logoGlitch 0.35s steps(2, end)
+        infinite;
+}
+
+.logo-image {
+    position: relative;
+    z-index: 1;
+}
+
+.logo-glitch {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 220px;
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
+    opacity: 0;
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.logo-hover:hover .logo-glitch {
+    opacity: 1;
+    visibility: visible;
+
+    animation:
+        logoGlitch 0.35s steps(2, end)
+        infinite;
+}
+
+@keyframes logoGlitch {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            translate(0, 0);
+    }
+
+    25% {
+        transform:
+            translate(-50%, -50%)
+            translate(-4px, 2px);
+    }
+
+    50% {
+        transform:
+            translate(-50%, -50%)
+            translate(3px, -2px);
+    }
+
+    75% {
+        transform:
+            translate(-50%, -50%)
+            translate(-2px, 1px);
+    }
+
+    100% {
+        transform:
+            translate(-50%, -50%)
+            translate(0, 0);
+    }
+
+}
 /* ================================
    Shelf link
 ================================ */
@@ -119,6 +231,66 @@ h1 {
     cursor: grabbing;
 
     scroll-behavior: auto;
+}
+
+
+/* ================================
+   Slider arrows
+================================ */
+
+.slider-arrow {
+    position: fixed;
+
+    top: 50%;
+
+    width: 60px;
+    height: 60px;
+
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    transform: translateY(-50%);
+
+    z-index: 30;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.slider-arrow img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+.left-arrow {
+    left: 25px;
+}
+
+.right-arrow {
+    right: 25px;
+}
+
+.left-arrow:hover {
+    opacity: 0.85;
+
+    transform:
+        translate(-4px, -50%)
+        rotate(-8deg);
+}
+
+.right-arrow:hover {
+    opacity: 0.85;
+
+    transform:
+        translate(4px, -50%)
+        rotate(8deg);
 }
 
 
