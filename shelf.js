@@ -22,6 +22,14 @@ const shelfPaper =
 const shelfTeddy =
     document.getElementById("shelfTeddy");
 
+const shelfTape =
+    document.getElementById("shelfTape");
+
+const shelfLego =
+    document.getElementById("shelfLego");
+
+const shelfClock =
+    document.getElementById("shelfClock");
 
 // =================================
 // Glass images
@@ -105,6 +113,39 @@ const teddyImages = [
     "assets/images/teddy1.png",
     "assets/images/teddy2.png",
     "assets/images/teddy3.png"
+];
+
+
+// =================================
+// Tape images
+// =================================
+
+const tapeImages = [
+    "assets/images/tape1.png",
+    "assets/images/tape2.png",
+    "assets/images/tape3.png",
+    "assets/images/tape4.png"
+];
+
+
+// =================================
+// Lego images
+// =================================
+
+const legoImages = [
+    "assets/images/lego1.png",
+    "assets/images/lego2.png"
+];
+
+
+// =================================
+// Clock images
+// =================================
+
+const clockImages = [
+    "assets/images/clock1.png",
+    "assets/images/clock2.png",
+    "assets/images/clock3.png"
 ];
 
 
@@ -334,6 +375,93 @@ function updateShelfTeddy() {
 }
 
 
+// =================================
+// Update shelf tape
+// =================================
+
+function updateShelfTape() {
+
+    const savedTapeStage =
+        localStorage.getItem("tapeStage");
+
+    let tapeStage = 0;
+
+    if (savedTapeStage !== null) {
+
+        tapeStage =
+            parseInt(savedTapeStage);
+
+    }
+
+    if (
+        tapeStage >= 0 &&
+        tapeStage < tapeImages.length
+    ) {
+        shelfTape.src =
+            tapeImages[tapeStage];
+    }
+
+}
+
+
+// =================================
+// Update shelf lego
+// =================================
+
+function updateShelfLego() {
+
+    const savedLegoStage =
+        localStorage.getItem("legoStage");
+
+    let legoStage = 0;
+
+    if (savedLegoStage !== null) {
+
+        legoStage =
+            parseInt(savedLegoStage);
+
+    }
+
+    if (
+        legoStage >= 0 &&
+        legoStage < legoImages.length
+    ) {
+        shelfLego.src =
+            legoImages[legoStage];
+    }
+
+}
+
+
+// =================================
+// Update shelf clock
+// =================================
+
+function updateShelfClock() {
+
+    const savedClockStage =
+        localStorage.getItem("clockStage");
+
+    let clockStage = 0;
+
+    if (savedClockStage !== null) {
+
+        clockStage =
+            parseInt(savedClockStage);
+
+    }
+
+    if (
+        clockStage >= 0 &&
+        clockStage < clockImages.length
+    ) {
+        shelfClock.src =
+            clockImages[clockStage];
+    }
+
+}
+
+
 
 // =================================
 // Update when opening Shelf
@@ -347,6 +475,9 @@ updateShelfPolaroid();
 updateShelfCan();
 updateShelfPaper();
 updateShelfTeddy();
+updateShelfTape();
+updateShelfLego();
+updateShelfClock();
 
 
 // =================================
@@ -365,6 +496,9 @@ window.addEventListener(
         updateShelfCan();
         updateShelfPaper();
         updateShelfTeddy();
+        updateShelfTape();
+        updateShelfLego();
+        updateShelfClock();
 
     }
 );
@@ -382,7 +516,10 @@ const objects = [
     shelfPolaroid,
     shelfCan,
     shelfPaper,
-    shelfTeddy
+    shelfTeddy,
+    shelfTape,
+    shelfLego,
+    shelfClock
 ];
 
 
@@ -622,4 +759,19 @@ makeDraggable(
 makeDraggable(
     shelfTeddy,
     "teddy"
+);
+
+makeDraggable(
+    shelfTape,
+    "tape"
+);
+
+makeDraggable(
+    shelfLego,
+    "lego"
+);
+
+makeDraggable(
+    shelfClock,
+    "clock"
 );

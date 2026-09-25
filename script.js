@@ -10,7 +10,13 @@ const polaroid = document.getElementById("polaroid");
 const can = document.getElementById("can");
 const paper = document.getElementById("paper");
 const teddy = document.getElementById("teddy");
-
+const teddyNarrative =
+    document.getElementById(
+        "teddyNarrative"
+    );
+const tape = document.getElementById("tape");
+const lego = document.getElementById("lego");
+const clock = document.getElementById("clock");
 
 // =================================
 // Infinite slider loop
@@ -306,6 +312,38 @@ const teddyImages = [
 ];
 
 
+// =================================
+// Tape images
+// =================================
+
+const tapeImages = [
+    "assets/images/tape1.png",
+    "assets/images/tape2.png",
+    "assets/images/tape3.png",
+    "assets/images/tape4.png"
+];
+
+
+// =================================
+// Lego images
+// =================================
+
+const legoImages = [
+    "assets/images/lego1.png",
+    "assets/images/lego2.png"
+];
+
+
+// =================================
+// Clock images
+// =================================
+
+const clockImages = [
+    "assets/images/clock1.png",
+    "assets/images/clock2.png",
+    "assets/images/clock3.png"
+];
+
 
 // =================================
 // Current stages
@@ -319,6 +357,9 @@ let polaroidStage = 0;
 let canStage = 0;
 let paperStage = 0;
 let teddyStage = 0;
+let tapeStage = 0;
+let legoStage = 0;
+let clockStage = 0;
 
 
 // =================================
@@ -498,6 +539,105 @@ if (savedTeddyStage !== null) {
 
 }
 
+updateTeddyNarrative();
+// =================================
+// Update teddy narrative
+// =================================
+
+function updateTeddyNarrative() {
+
+    if (
+        teddyStage ===
+        teddyImages.length - 1
+    ) {
+
+        teddyNarrative.style.visibility =
+            "visible";
+
+        teddyNarrative.style.opacity =
+            "1";
+
+    } else {
+
+        teddyNarrative.style.visibility =
+            "hidden";
+
+        teddyNarrative.style.opacity =
+            "0";
+
+    }
+
+}
+
+
+// =================================
+// Load tape state
+// =================================
+
+const savedTapeStage =
+    localStorage.getItem("tapeStage");
+
+if (savedTapeStage !== null) {
+
+    tapeStage =
+        parseInt(savedTapeStage);
+
+    if (
+        tapeStage >= 0 &&
+        tapeStage < tapeImages.length
+    ) {
+        tape.src =
+            tapeImages[tapeStage];
+    }
+
+}
+
+
+// =================================
+// Load lego state
+// =================================
+
+const savedLegoStage =
+    localStorage.getItem("legoStage");
+
+if (savedLegoStage !== null) {
+
+    legoStage =
+        parseInt(savedLegoStage);
+
+    if (
+        legoStage >= 0 &&
+        legoStage < legoImages.length
+    ) {
+        lego.src =
+            legoImages[legoStage];
+    }
+
+}
+
+
+// =================================
+// Load clock state
+// =================================
+
+const savedClockStage =
+    localStorage.getItem("clockStage");
+
+if (savedClockStage !== null) {
+
+    clockStage =
+        parseInt(savedClockStage);
+
+    if (
+        clockStage >= 0 &&
+        clockStage < clockImages.length
+    ) {
+        clock.src =
+            clockImages[clockStage];
+    }
+
+}
+
 
 
 // =================================
@@ -612,6 +752,48 @@ function saveTeddyState() {
 }
 
 
+// =================================
+// Save tape state
+// =================================
+
+function saveTapeState() {
+
+    localStorage.setItem(
+        "tapeStage",
+        tapeStage
+    );
+
+}
+
+
+// =================================
+// Save lego state
+// =================================
+
+function saveLegoState() {
+
+    localStorage.setItem(
+        "legoStage",
+        legoStage
+    );
+
+}
+
+
+// =================================
+// Save clock state
+// =================================
+
+function saveClockState() {
+
+    localStorage.setItem(
+        "clockStage",
+        clockStage
+    );
+
+}
+
+
 
 // =================================
 // Glass sound
@@ -699,6 +881,39 @@ const teddySound = new Audio(
 );
 
 teddySound.volume = 0.7;
+
+
+// =================================
+// Tape sound
+// =================================
+
+const tapeSound = new Audio(
+    "assets/audio/TAPE_863205__alexarje__loading-dvd-soundaction-227.wav"
+);
+
+tapeSound.volume = 0.7;
+
+
+// =================================
+// Lego sound
+// =================================
+
+const legoSound = new Audio(
+    "assets/audio/LEGO_423783__someonecool15__lego-bricks-1.mp3"
+);
+
+legoSound.volume = 0.7;
+
+
+// =================================
+// Clock sound
+// =================================
+
+const clockSound = new Audio(
+    "assets/audio/CLOCK_620077__ryankingart__metal-impact.mp3"
+);
+
+clockSound.volume = 0.7;
 
 
 
@@ -892,6 +1107,7 @@ teddy.addEventListener(
             teddy.src =
                 teddyImages[teddyStage];
 
+            updateTeddyNarrative();
             saveTeddyState();
 
             teddySound.currentTime = 0;
@@ -926,6 +1142,93 @@ paper.addEventListener(
 
             paperSound.currentTime = 0;
             paperSound.play();
+
+        }
+
+    }
+);
+
+
+// =================================
+// Click tape to break
+// =================================
+
+tape.addEventListener(
+    "click",
+    function () {
+
+        if (
+            tapeStage <
+            tapeImages.length - 1
+        ) {
+
+            tapeStage++;
+
+            tape.src =
+                tapeImages[tapeStage];
+
+            saveTapeState();
+
+            tapeSound.currentTime = 0;
+            tapeSound.play();
+
+        }
+
+    }
+);
+
+
+// =================================
+// Click lego to break
+// =================================
+
+lego.addEventListener(
+    "click",
+    function () {
+
+        if (
+            legoStage <
+            legoImages.length - 1
+        ) {
+
+            legoStage++;
+
+            lego.src =
+                legoImages[legoStage];
+
+            saveLegoState();
+
+            legoSound.currentTime = 0;
+            legoSound.play();
+
+        }
+
+    }
+);
+
+
+// =================================
+// Click clock to break
+// =================================
+
+clock.addEventListener(
+    "click",
+    function () {
+
+        if (
+            clockStage <
+            clockImages.length - 1
+        ) {
+
+            clockStage++;
+
+            clock.src =
+                clockImages[clockStage];
+
+            saveClockState();
+
+            clockSound.currentTime = 0;
+            clockSound.play();
 
         }
 

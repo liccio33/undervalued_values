@@ -404,3 +404,32 @@ h1 {
     }
 
 }
+
+.teddy-page {
+    position: relative;
+}
+
+.teddy-narrative {
+    position: absolute;
+
+    left: 28%;
+    bottom: 53%;
+
+    width: 280px;
+    height: auto;
+
+    transform: translateX(-50%);
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition:
+        opacity 0.3s ease;
+
+    pointer-events: none;
+}
+
+#tape {
+    width: 500px;
+    height: auto;
+}
