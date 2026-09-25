@@ -223,6 +223,14 @@ h1 {
     cursor: grab;
 }
 
+.slider {
+    visibility: hidden;
+}
+
+.slider.ready {
+    visibility: visible;
+}
+
 .slider::-webkit-scrollbar {
     display: none;
 }

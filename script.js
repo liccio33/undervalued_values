@@ -23,7 +23,11 @@ const clock = document.getElementById("clock");
 // =================================
 
 const originalPages =
-    Array.from(slider.children);
+    Array.from(
+        slider.querySelectorAll(
+            ":scope > .object-page"
+        )
+    );
 
 const originalPageCount =
     originalPages.length;
@@ -1574,6 +1578,8 @@ window.addEventListener(
 
         slider.style.scrollBehavior =
             "";
+
+        slider.classList.add("ready");
 
     }
 );
