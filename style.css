@@ -174,6 +174,8 @@ h1 {
     }
 
 }
+
+
 /* ================================
    Shelf link
 ================================ */
@@ -311,6 +313,8 @@ h1 {
     width: 100vw;
     height: 100vh;
 
+    position: relative;
+
     flex-shrink: 0;
 
     display: flex;
@@ -417,27 +421,58 @@ h1 {
     position: relative;
 }
 
-.teddy-narrative {
+
+/* ================================
+   Narrative images
+================================ */
+
+.narrative-image {
     position: absolute;
 
-    left: 28%;
-    bottom: 53%;
+    left: 50%;
+    top: 45%;
 
-    width: 280px;
-    height: auto;
+    width: 400px;
+    height: 400px;
 
-    transform: translateX(-50%);
+    transform:
+        translate(-50%, -50%)
+        translateY(0);
 
-    visibility: hidden;
+    object-fit: contain;
+
     opacity: 0;
+    visibility: hidden;
 
     transition:
-        opacity 0.3s ease;
+        opacity 1.2s ease,
+        transform 1.2s ease,
+        visibility 1.2s ease;
+
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.narrative-image.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.narrative-image.slide-down {
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translate(-50%, -50%)
+        translateY(180px);
 
     pointer-events: none;
 }
+
 
 #tape {
     width: 500px;
     height: auto;
 }
+

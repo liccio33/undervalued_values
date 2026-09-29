@@ -1,7 +1,6 @@
 const slider = document.getElementById("slider");
 const leftArrow = document.getElementById("leftArrow");
 const rightArrow = document.getElementById("rightArrow");
-
 const glass = document.getElementById("glass");
 const flower = document.getElementById("flower");
 const plate = document.getElementById("plate");
@@ -10,13 +9,135 @@ const polaroid = document.getElementById("polaroid");
 const can = document.getElementById("can");
 const paper = document.getElementById("paper");
 const teddy = document.getElementById("teddy");
+const tape = document.getElementById("tape");
+const lego = document.getElementById("lego");
+const clock = document.getElementById("clock");
+
+const plateNarrative =
+    document.getElementById(
+        "plateNarrative"
+    );
+
+const glassNarrative =
+    document.getElementById(
+        "glassNarrative"
+    );
+
+const flowerNarrative =
+    document.getElementById(
+        "flowerNarrative"
+    );
+
+const bubbleNarrative =
+    document.getElementById(
+        "bubbleNarrative"
+    );
+
+const polaroidNarrative =
+    document.getElementById(
+        "polaroidNarrative"
+    );
+
+const canNarrative =
+    document.getElementById(
+        "canNarrative"
+    );
+
+const paperNarrative =
+    document.getElementById(
+        "paperNarrative"
+    );
+
 const teddyNarrative =
     document.getElementById(
         "teddyNarrative"
     );
-const tape = document.getElementById("tape");
-const lego = document.getElementById("lego");
-const clock = document.getElementById("clock");
+
+const tapeNarrative =
+    document.getElementById(
+        "tapeNarrative"
+    );
+
+const legoNarrative =
+    document.getElementById(
+        "legoNarrative"
+    );
+
+const clockNarrative =
+    document.getElementById(
+        "clockNarrative"
+    );
+
+
+// =================================
+// Narrative slides down after click
+// =================================
+
+const dismissedNarratives =
+    new Set();
+
+document.querySelectorAll(
+    ".narrative-image"
+).forEach(
+    function (image) {
+
+        const savedDismissed =
+            localStorage.getItem(
+                image.id + "Dismissed"
+            );
+
+        if (
+            savedDismissed ===
+            "true"
+        ) {
+
+            dismissedNarratives.add(
+                image.id
+            );
+
+            image.classList.add(
+                "slide-down"
+            );
+
+        }
+
+        image.addEventListener(
+            "click",
+            function (event) {
+
+                event.stopPropagation();
+
+                if (
+                    dismissedNarratives.has(
+                        image.id
+                    )
+                ) {
+                    return;
+                }
+
+                dismissedNarratives.add(
+                    image.id
+                );
+
+                image.classList.remove(
+                    "show"
+                );
+
+                image.classList.add(
+                    "slide-down"
+                );
+
+                localStorage.setItem(
+                    image.id + "Dismissed",
+                    "true"
+                );
+
+            }
+        );
+
+    }
+);
+
 
 // =================================
 // Infinite slider loop
@@ -388,6 +509,7 @@ if (savedGlassStage !== null) {
 
 }
 
+updateGlassNarrative();
 
 // =================================
 // Load flower state
@@ -411,6 +533,7 @@ if (savedFlowerStage !== null) {
 
 }
 
+updateFlowerNarrative();
 
 // =================================
 // Load plate state
@@ -434,6 +557,7 @@ if (savedPlateStage !== null) {
 
 }
 
+updatePlateNarrative();
 
 // =================================
 // Load bubble state
@@ -451,6 +575,7 @@ if (savedBubbleState === "false") {
 
 }
 
+updateBubbleNarrative();
 
 // =================================
 // Load polaroid state
@@ -474,6 +599,7 @@ if (savedPolaroidStage !== null) {
 
 }
 
+updatePolaroidNarrative();
 
 // =================================
 // Load can state
@@ -497,6 +623,7 @@ if (savedCanStage !== null) {
 
 }
 
+updateCanNarrative();
 
 // =================================
 // Load paper state
@@ -520,6 +647,7 @@ if (savedPaperStage !== null) {
 
 }
 
+updatePaperNarrative();
 
 // =================================
 // Load teddy state
@@ -544,35 +672,6 @@ if (savedTeddyStage !== null) {
 }
 
 updateTeddyNarrative();
-// =================================
-// Update teddy narrative
-// =================================
-
-function updateTeddyNarrative() {
-
-    if (
-        teddyStage ===
-        teddyImages.length - 1
-    ) {
-
-        teddyNarrative.style.visibility =
-            "visible";
-
-        teddyNarrative.style.opacity =
-            "1";
-
-    } else {
-
-        teddyNarrative.style.visibility =
-            "hidden";
-
-        teddyNarrative.style.opacity =
-            "0";
-
-    }
-
-}
-
 
 // =================================
 // Load tape state
@@ -596,6 +695,7 @@ if (savedTapeStage !== null) {
 
 }
 
+updateTapeNarrative();
 
 // =================================
 // Load lego state
@@ -619,6 +719,7 @@ if (savedLegoStage !== null) {
 
 }
 
+updateLegoNarrative();
 
 // =================================
 // Load clock state
@@ -642,7 +743,344 @@ if (savedClockStage !== null) {
 
 }
 
+updateClockNarrative();
 
+// =================================
+// Update teddy narrative
+// =================================
+
+function updateTeddyNarrative() {
+
+    if (
+        teddyStage ===
+        teddyImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            teddyNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        teddyNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update plate narrative
+// =================================
+
+function updatePlateNarrative() {
+
+    if (
+        plateStage ===
+        plateImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            plateNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        plateNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update glass narrative
+// =================================
+
+function updateGlassNarrative() {
+
+    if (
+        glassStage ===
+        glassImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            glassNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        glassNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update flower narrative
+// =================================
+
+function updateFlowerNarrative() {
+
+    if (
+        flowerStage ===
+        flowerImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            flowerNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        flowerNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update bubble narrative
+// =================================
+
+function updateBubbleNarrative() {
+
+    if (!bubbleVisible) {
+
+        setTimeout(() => {
+
+            bubbleNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        bubbleNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update polaroid narrative
+// =================================
+
+function updatePolaroidNarrative() {
+
+    if (
+        polaroidStage ===
+        polaroidImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            polaroidNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        polaroidNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update can narrative
+// =================================
+
+function updateCanNarrative() {
+
+    if (
+        canStage ===
+        canImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            canNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        canNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update paper narrative
+// =================================
+
+function updatePaperNarrative() {
+
+    if (
+        paperStage ===
+        paperImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            paperNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        paperNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update tape narrative
+// =================================
+
+function updateTapeNarrative() {
+
+    if (
+        tapeStage ===
+        tapeImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            tapeNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        tapeNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update lego narrative
+// =================================
+
+function updateLegoNarrative() {
+
+    if (
+        legoStage ===
+        legoImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            legoNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        legoNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Update clock narrative
+// =================================
+
+function updateClockNarrative() {
+
+    if (
+        clockStage ===
+        clockImages.length - 1
+    ) {
+
+        setTimeout(() => {
+
+            clockNarrative.classList.add(
+                "show"
+            );
+
+        }, 300);
+
+    } else {
+
+        clockNarrative.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+updatePlateNarrative();
+updateGlassNarrative();
+updateFlowerNarrative();
+updateBubbleNarrative();
+updatePolaroidNarrative();
+updateCanNarrative();
+updatePaperNarrative();
+updateTapeNarrative();
+updateLegoNarrative();
+updateClockNarrative();
 
 // =================================
 // Save glass state
@@ -939,6 +1377,7 @@ glass.addEventListener(
             glass.src =
                 glassImages[glassStage];
 
+            updateGlassNarrative();
             saveGlassState();
 
             glassSound.currentTime = 0;
@@ -968,6 +1407,7 @@ flower.addEventListener(
             flower.src =
                 flowerImages[flowerStage];
 
+            updateFlowerNarrative();
             saveFlowerState();
 
             flowerSound.currentTime = 0;
@@ -997,6 +1437,7 @@ plate.addEventListener(
             plate.src =
                 plateImages[plateStage];
 
+            updatePlateNarrative();
             savePlateState();
 
             plateSound.currentTime = 0;
@@ -1027,6 +1468,7 @@ bubble.addEventListener(
             "bubbleVisible",
             "false"
         );
+        updateBubbleNarrative();
 
         bubbleSound.currentTime = 0;
         bubbleSound.play();
@@ -1053,6 +1495,7 @@ polaroid.addEventListener(
             polaroid.src =
                 polaroidImages[polaroidStage];
 
+            updatePolaroidNarrative();
             savePolaroidState();
 
             polaroidSound.currentTime = 0;
@@ -1082,6 +1525,7 @@ can.addEventListener(
             can.src =
                 canImages[canStage];
 
+            updateCanNarrative();
             saveCanState();
 
             canSound.currentTime = 0;
@@ -1142,6 +1586,7 @@ paper.addEventListener(
             paper.src =
                 paperImages[paperStage];
 
+            updatePaperNarrative();
             savePaperState();
 
             paperSound.currentTime = 0;
@@ -1171,6 +1616,7 @@ tape.addEventListener(
             tape.src =
                 tapeImages[tapeStage];
 
+            updateTapeNarrative();
             saveTapeState();
 
             tapeSound.currentTime = 0;
@@ -1200,6 +1646,7 @@ lego.addEventListener(
             lego.src =
                 legoImages[legoStage];
 
+            updateLegoNarrative();
             saveLegoState();
 
             legoSound.currentTime = 0;
@@ -1229,6 +1676,7 @@ clock.addEventListener(
             clock.src =
                 clockImages[clockStage];
 
+            updateClockNarrative();
             saveClockState();
 
             clockSound.currentTime = 0;
