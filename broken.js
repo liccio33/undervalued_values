@@ -251,8 +251,8 @@ function syncPageState(
                 clonedImages[index].src =
                     image.src;
 
-                clonedImages[index].broken.cssText =
-                    image.broken.cssText;
+                clonedImages[index].style.cssText =
+                    image.style.cssText;
 
                 clonedImages[index].className =
                     image.className;
