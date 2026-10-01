@@ -13,6 +13,25 @@ const tape = document.getElementById("tape");
 const lego = document.getElementById("lego");
 const clock = document.getElementById("clock");
 
+const shelfBackground =
+    document.getElementById("shelfBackground");
+
+const shelfBroken =
+    document.getElementById("shelfBroken");
+
+const shelfEnding =
+    document.getElementById("shelfEnding");
+
+const shelfEndingText =
+    document.getElementById("shelfEndingText");
+
+const shelfHands =
+    document.getElementById("shelfHands");
+
+const shelfHammer =
+    document.getElementById("shelfHammer");
+
+
 const plateNarrative =
     document.getElementById(
         "plateNarrative"
@@ -2028,6 +2047,328 @@ window.addEventListener(
             "";
 
         slider.classList.add("ready");
+
+    }
+);
+
+// =================================
+// Final shelf ending
+// =================================
+
+const finalShelfStages = {
+
+    glassStage: 3,
+    plateStage: 2,
+    flowerStage: 5
+
+};
+
+
+// =================================
+// Check whether all objects are broken
+// =================================
+
+function areAllShelfObjectsBroken() {
+
+    return Object.entries(
+        finalShelfStages
+    ).every(
+        function ([key, finalStage]) {
+
+            const savedStage =
+                localStorage.getItem(key);
+
+            return (
+                savedStage !== null &&
+                parseInt(savedStage) >= finalStage
+            );
+
+        }
+    );
+
+}
+
+
+// =================================
+// Show final shelf ending
+// =================================
+
+function checkShelfEnding() {
+
+    if (
+        areAllShelfObjectsBroken() &&
+        localStorage.getItem(
+            "shelfBroken"
+        ) !== "true"
+    ) {
+
+        shelfEnding.classList.add(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Hammer dragging
+// =================================
+
+let hammerDragging = false;
+
+let hammerPicked = false;
+
+let hammerOffsetX = 0;
+let hammerOffsetY = 0;
+
+
+shelfHammer.addEventListener(
+    "pointerdown",
+    function (event) {
+
+        hammerDragging = true;
+
+        hammerPicked = true;
+
+        shelfHammer.classList.add(
+            "picked"
+        );
+
+        shelfHammer.setPointerCapture(
+            event.pointerId
+        );
+
+        const rect =
+            shelfHammer.getBoundingClientRect();
+
+        hammerOffsetX =
+            event.clientX - rect.left;
+
+        hammerOffsetY =
+            event.clientY - rect.top;
+
+        shelfHammer.style.left =
+            rect.left + "px";
+
+        shelfHammer.style.top =
+            rect.top + "px";
+
+        shelfHammer.style.bottom =
+            "auto";
+
+        shelfHands.classList.add(
+            "exit"
+        );
+
+    }
+);
+
+
+shelfHammer.addEventListener(
+    "pointermove",
+    function (event) {
+
+        if (!hammerDragging) return;
+
+        const newLeft =
+            event.clientX -
+            hammerOffsetX;
+
+        const newTop =
+            event.clientY -
+            hammerOffsetY;
+
+        shelfHammer.style.left =
+            newLeft + "px";
+
+        shelfHammer.style.top =
+            newTop + "px";
+
+    }
+);
+
+
+shelfHammer.addEventListener(
+    "pointerup",
+    function (event) {
+
+        if (!hammerDragging) return;
+
+        hammerDragging = false;
+
+        shelfHammer.releasePointerCapture(
+            event.pointerId
+        );
+
+    }
+);
+
+
+// =================================
+// Hammer hits shelf
+// =================================
+
+let shelfHitCount = 0;
+
+const requiredShelfHits = 3;
+
+
+document.querySelector(
+    ".shelf"
+).addEventListener(
+    "pointerdown",
+    function (event) {
+
+        if (!hammerPicked) return;
+
+        if (
+            event.target !== shelfBackground
+        ) {
+            return;
+        }
+
+        shelfHitCount++;
+
+        document.querySelector(
+            ".shelf"
+        ).classList.remove(
+            "shake"
+        );
+
+        void document.querySelector(
+            ".shelf"
+        ).offsetWidth;
+
+        document.querySelector(
+            ".shelf"
+        ).classList.add(
+            "shake"
+        );
+
+        if (
+            shelfHitCount >= requiredShelfHits
+        ) {
+
+            breakShelf();
+
+        }
+
+    }
+);
+
+
+// =================================
+// Break shelf
+// =================================
+
+function breakShelf() {
+
+    if (
+        localStorage.getItem(
+            "shelfBroken"
+        ) === "true"
+    ) {
+        return;
+    }
+
+    localStorage.setItem(
+        "shelfBroken",
+        "true"
+    );
+
+    shelfBackground.style.visibility =
+        "hidden";
+
+    objects.forEach(
+        function (object) {
+
+            object.style.opacity =
+                "0";
+
+            object.style.pointerEvents =
+                "none";
+
+        }
+    );
+
+    shelfBroken.classList.add(
+        "visible"
+    );
+
+    shelfEnding.classList.remove(
+        "show"
+    );
+
+    shelfHammer.style.opacity =
+        "0";
+
+    shelfHammer.style.pointerEvents =
+        "none";
+
+}
+
+
+// =================================
+// Restore broken shelf
+// =================================
+
+function restoreBrokenShelf() {
+
+    if (
+        localStorage.getItem(
+            "shelfBroken"
+        ) === "true"
+    ) {
+
+        shelfBackground.style.visibility =
+            "hidden";
+
+        objects.forEach(
+            function (object) {
+
+                object.style.opacity =
+                    "0";
+
+                object.style.pointerEvents =
+                    "none";
+
+            }
+        );
+
+        shelfBroken.classList.add(
+            "visible"
+        );
+
+        shelfEnding.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+// =================================
+// Check ending when shelf opens
+// =================================
+
+checkShelfEnding();
+
+restoreBrokenShelf();
+
+
+// =================================
+// Check ending when returning to Shelf
+// =================================
+
+window.addEventListener(
+    "pageshow",
+    function () {
+
+        checkShelfEnding();
+
+        restoreBrokenShelf();
 
     }
 );

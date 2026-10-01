@@ -27,7 +27,11 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
+.storage-note {
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+}
 /* ================================
    Title
 ================================ */
@@ -340,7 +344,9 @@ h1 {
     cursor: pointer;
     user-select: none;
     -webkit-user-drag: none;
-    transition: transform 0.2s ease;
+    transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
 }
 
 
@@ -349,11 +355,51 @@ h1 {
 @media (hover: hover) {
 
     .object-image:hover {
-        transform: scale(1.02);
+        opacity: 0.9;
+
+        animation:
+            fragileShake 0.45s ease-in-out
+            infinite;
     }
 
 }
 
+@keyframes fragileShake {
+
+    0% {
+        transform:
+            scale(0.99)
+            rotate(0deg);
+    }
+
+    25% {
+        transform:
+            scale(0.99)
+            rotate(-0.4deg)
+            translateX(-1px);
+    }
+
+    50% {
+        transform:
+            scale(0.99)
+            rotate(0.4deg)
+            translateX(1px);
+    }
+
+    75% {
+        transform:
+            scale(0.99)
+            rotate(-0.25deg)
+            translateX(-1px);
+    }
+
+    100% {
+        transform:
+            scale(0.99)
+            rotate(0deg);
+    }
+
+}
 
 /* ================================
    Instruction
@@ -371,7 +417,13 @@ h1 {
 
     text-align: center;
 
+    font-family: "Courier New", sans-serif;
     font-size: 15px;
+    line-height: 1.45;
+    letter-spacing: -1px;
+    font-weight: 400;
+
+    -webkit-text-stroke: 0.25px currentColor;
 
     z-index: 10;
 

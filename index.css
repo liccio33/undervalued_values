@@ -1,0 +1,42 @@
+
+.opening-page {
+    cursor: none;
+}
+
+.opening-page.loaded
+.care-text {
+    opacity: 0.1;
+}
+
+#scissorCursor {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 150px;
+    height: auto;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.15s ease;
+}
+
+.opening-page:hover #scissorCursor {
+    opacity: 1;
+}
+
+#scissorCursor.cutting {
+    transform:
+        translate(-50%, -50%)
+        scale(1.08); 
+}

@@ -3,303 +3,351 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Broken Things</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>Please Handle With Care</title>
+
+    <link
+        rel="stylesheet"
+        href="box.css"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+        }
+
+        body {
+            opacity: 1;
+
+            transition:
+                opacity 0.7s ease;
+        }
+
+        body.fade-out {
+            opacity: 0;
+        }
+
+        .opening-page {
+            position: relative;
+
+            display: block;
+
+            width: 100vw;
+            height: 100vh;
+
+            cursor: none;
+        }
+
+        .box-background {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            opacity: 0;
+
+            transition:
+                opacity 0.8s ease;
+
+            z-index: 1;
+        }
+
+        .care-text {
+            position: absolute;
+
+            top: 70%;
+            left: 30%;
+
+            width: 720px;
+            max-width: 65vw;
+            height: auto;
+
+            transform:
+                translate(-50%, -50%);
+
+            opacity: 0;
+
+            transition:
+                opacity 0.8s ease;
+
+            z-index: 2;
+
+            pointer-events: none;
+        }
+
+        .opening-page.loaded
+        .box-background {
+            opacity: 1;
+        }
+
+        .opening-page.loaded
+        .care-text {
+            opacity: 0.85;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Title -->
-    <h1 class="logo-title">
+    <a
+        href="broken.html"
+        class="opening-page"
+        id="openingPage"
+    >
 
-        <span class="logo-hover">
+        <img
+            src="assets/images/box.png"
+            alt="Box"
+            class="box-background"
+            id="boxBackground"
+        >
 
-            <img
-                class="logo-image"
-                src="assets/images/logo.png"
-                alt="Logo"
-            >
+        <img
+            src="assets/images/please handle with care.png"
+            alt="Please handle with care"
+            class="care-text"
+        >
 
-            <img
-                class="logo-glitch"
-                src="assets/images/scribble-transparent.gif"
-                alt=""
-            >
+        <img
+            id="scissorCursor"
+            src="assets/images/scissor.png"
+            alt=""
+        >
 
-        </span>
-
-    </h1>
-
-
-    <h6>localStorage.clear();</h6>
-    
-    <!-- Shelf link -->
-    <a href="shelf.html" class="shelf-link">
-        $hε!ƒ
     </a>
 
-    <!-- Main horizontal slider -->
 
-    <!-- Left arrow -->
-    <button
-        id="leftArrow"
-        class="slider-arrow left-arrow"
-        type="button"
-    >
-        <img
-            src="assets/images/left.png"
-            alt="Previous"
-        >
-    </button>
+    <script>
+        const openingPage =
+            document.getElementById(
+                "openingPage"
+            );
 
+        const boxBackground =
+            document.getElementById(
+                "boxBackground"
+            );
 
-    <!-- Right arrow -->
-    <button
-        id="rightArrow"
-        class="slider-arrow right-arrow"
-        type="button"
-    >
-        <img
-            src="assets/images/right.png"
-            alt="Next"
-        >
-    </button>
+        boxBackground.addEventListener(
+            "load",
+            function () {
 
-    <main class="slider" id="slider">
+                openingPage.classList.add(
+                    "loaded"
+                );
 
-        <!-- Plate -->
-        <section class="object-page">
+            }
+        );
 
-            <img
-                id="plate"
-                src="assets/images/plate1.png"
-                alt="Plate"
-                class="object-image"
-            >
+        boxBackground.addEventListener(
+            "error",
+            function () {
 
-            <img
-                id="plateNarrative"
-                src="assets/images/plate_nar.png"
-                alt=""
-                class="narrative-image"
-            >
+                console.log(
+                    "box.png 找不到，请检查图片路径"
+                );
 
-        </section>
+            }
+        );
+    </script>
 
 
-        <!-- Glass -->
-        <section class="object-page">
+    <script>
+        const scissorCursor =
+            document.getElementById(
+                "scissorCursor"
+            );
 
-            <img
-                id="glass"
-                src="assets/images/glass1.png"
-                alt="Glass"
-                class="object-image"
-            >
+        let isCutting = false;
+        let isLeaving = false;
 
-            <img
-                id="glassNarrative"
-                src="assets/images/glass_nar.png"
-                alt=""
-                class="narrative-image"
-            >
+        const boxScratchSound =
+            new Audio(
+                "assets/audio/BOX_125782__alienistcog__cardboard-scratches.mp3"
+            );
 
-        </section>
+        boxScratchSound.loop = true;
+        boxScratchSound.volume = 0.6;
 
 
-        <!-- Flower -->
-        <section class="object-page">
+        function startScratchSound() {
 
-            <img
-                id="flower"
-                src="assets/images/flower1.png"
-                alt="Flower"
-                class="object-image"
-            >
+            boxScratchSound.currentTime = 0;
 
-            <img
-                id="flowerNarrative"
-                src="assets/images/flower_nar.png"
-                alt=""
-                class="narrative-image"
-            >
-            
-        </section>
+            const playPromise =
+                boxScratchSound.play();
 
+            if (playPromise !== undefined) {
 
-        <!-- Bubble -->
-        <section class="object-page">
+                playPromise.catch(
+                    function () {
 
-            <img
-                id="bubble"
-                src="assets/images/bubble1.png"
-                 alt="Bubble"
-                 class="object-image"
-            >
+                        console.log(
+                            "音效播放失败"
+                        );
 
-            <img
-                id="bubbleNarrative"
-                src="assets/images/bubble_nar.png"
-                alt=""
-                class="narrative-image"
-            >
-            
-        </section>
+                    }
+                );
+
+            }
+
+        }
 
 
-        <!-- Polaroid -->
-        <section class="object-page">
+        function stopScratchSound() {
 
-            <img
-                id="polaroid"
-                src="assets/images/polaroid1.png"
-                alt="Polaroid"
-                class="object-image"
-            >
+            boxScratchSound.pause();
 
-            <img
-                id="polaroidNarrative"
-                src="assets/images/polaroid_nar.png"
-                alt=""
-                class="narrative-image"
-            >
-            
-        </section>
+            boxScratchSound.currentTime = 0;
+
+        }
 
 
-        <!-- Can -->
-        <section class="object-page">
+        let startX = 0;
 
-            <img
-                id="can"
-                src="assets/images/can1.png"
-                alt="Can"
-                class="object-image"
-            >
+        const centerTolerance = 100;
 
-            <img
-                id="canNarrative"
-                src="assets/images/can_nar.png"
-                alt=""
-                class="narrative-image"
-            >
-            
-        </section>
+        openingPage.addEventListener(
+            "mousemove",
+            function (event) {
 
+                scissorCursor.style.left =
+                    event.clientX + "px";
 
-        <!-- Paper -->
-        <section class="object-page">
+                scissorCursor.style.top =
+                    event.clientY + "px";
 
-            <img
-                id="paper"
-                src="assets/images/paper1.png"
-                alt="Paper"
-                class="object-image"
-            >
+                if (!isCutting) return;
 
-            <img
-                id="paperNarrative"
-                src="assets/images/paper_nar.png"
-                alt=""
-                class="narrative-image"
-            >
-            
-        </section>
+                const isStillInCenter =
+                    Math.abs(
+                        event.clientY -
+                        window.innerHeight / 2
+                    ) <= centerTolerance;
 
-        <!-- Teddy -->
-        <section class="object-page teddy-page">
+                const distance =
+                    event.clientX - startX;
 
-            <img
-                id="teddy"
-                src="assets/images/teddy1.png"
-                alt="Teddy"
-                class="object-image"
-            >
+                const hasReachedRightSide =
+                    event.clientX >=
+                    window.innerWidth * 0.88;
 
-            <img
-                id="teddyNarrative"
-                src="assets/images/teddy_nar.png"
-                alt=""
-                class="narrative-image"
-            >
-            
+                const hasMovedRight =
+                    event.clientX > startX;
 
-        </section>
+                if (
+                    isCutting &&
+                    isStillInCenter &&
+                    hasMovedRight &&
+                    hasReachedRightSide
+                ) {
 
-        <!-- Tape -->
-        <section class="object-page">
+                    goToNextPage();
 
-            <img
-                id="tape"
-                src="assets/images/tape1.png"
-                alt="Tape"
-                class="object-image"
-            >
+                }
 
-            <img
-                id="tapeNarrative"
-                src="assets/images/tape_nar.png"
-                alt=""
-                class="narrative-image"
-            >
-
-        </section>
+            }
+        );
 
 
-        <!-- Lego -->
-        <section class="object-page">
+        openingPage.addEventListener(
+            "mousedown",
+            function (event) {
 
-            <img
-                id="lego"
-                src="assets/images/lego1.png"
-                alt="Lego"
-                class="object-image"
-            >
+                const isInCenter =
+                    Math.abs(
+                        event.clientY -
+                        window.innerHeight / 2
+                    ) <= centerTolerance;
 
-            <img
-                id="legoNarrative"
-                src="assets/images/lego_nar.png"
-                alt=""
-                class="narrative-image"
-            >
+                const isAtLeftSide =
+                    event.clientX <=
+                    window.innerWidth * 0.12;
 
-        </section>
+                if (
+                    !isInCenter ||
+                    !isAtLeftSide
+                ) {
+                    return;
+                }
 
+                event.preventDefault();
 
-        <!-- Clock -->
-        <section class="object-page">
+                isCutting = true;
 
-            <img
-                id="clock"
-                src="assets/images/clock1.png"
-                alt="Clock"
-                class="object-image"
-            >
+                startX = event.clientX;
+                startY = event.clientY;
 
-            <img
-                id="clockNarrative"
-                src="assets/images/clock_nar.png"
-                alt=""
-                class="narrative-image"
-            >
-        </section>
+                startScratchSound();
 
+                scissorCursor.classList.add(
+                    "cutting"
+                );
 
-</section>
-
-    </main>
+            }
+        );
 
 
-    <!-- Instruction -->
-    <p class="instruction">
-        Swipe to explore · Click to break
-    </p>
+        window.addEventListener(
+            "mouseup",
+            function () {
+
+                isCutting = false;
+
+                stopScratchSound();
+
+                scissorCursor.classList.remove(
+                    "cutting"
+                );
+
+            }
+        );
 
 
-    <script src="script.js"></script>
+        openingPage.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+
+        function goToNextPage() {
+
+            if (isLeaving) return;
+
+            isLeaving = true;
+
+            stopScratchSound();
+
+            window.location.href =
+                "broken.html";
+
+        }
+    </script>
 
 </body>
 

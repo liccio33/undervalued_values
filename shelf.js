@@ -775,3 +775,535 @@ makeDraggable(
     shelfClock,
     "clock"
 );
+
+// =================================
+// Final shelf ending
+// =================================
+
+const shelfBackground =
+    document.getElementById(
+        "shelfBackground"
+    );
+
+const shelfEnding =
+    document.getElementById(
+        "shelfEnding"
+    );
+
+const shelfHands =
+    document.getElementById(
+        "shelfHands"
+    );
+
+const shelfHammer =
+    document.getElementById(
+        "shelfHammer"
+    );
+
+const shelfSpaceHint =
+    document.getElementById(
+        "shelfSpaceHint"
+    );
+
+const shelfEndingText =
+    document.getElementById(
+        "shelfEndingText"
+    );
+
+const shelfDialogue =
+    document.getElementById(
+        "shelfDialogue"
+    );
+
+const shelfArrow =
+    document.getElementById(
+        "shelfArrow"
+    );
+
+
+let shelfTextStarted = false;
+
+const shelfEndingMessage =
+    "looks like you weren't careful enough\n" +
+    "but that's okay \n" +
+    "not everything is meant to be complete forever";
+
+
+// =================================
+// Final stages of all objects
+// =================================
+
+const finalShelfStages = {
+
+    glassStage: 4,
+    plateStage: 2,
+    flowerStage: 5,
+    polaroidStage: 4,
+    canStage: 2,
+    paperStage: 3,
+    teddyStage: 2,
+    tapeStage: 3,
+    legoStage: 1,
+    clockStage: 2
+
+};
+
+
+// =================================
+// Check whether all objects are broken
+// =================================
+
+function areAllShelfObjectsBroken() {
+
+    const allObjectsBroken =
+        Object.entries(
+            finalShelfStages
+        ).every(
+            function ([key, finalStage]) {
+
+                const savedStage =
+                    localStorage.getItem(key);
+
+                return (
+                    savedStage !== null &&
+                    parseInt(savedStage) >= finalStage
+                );
+
+            }
+        );
+
+
+    const bubbleBroken =
+        localStorage.getItem(
+            "bubbleVisible"
+        ) === "false";
+
+
+    return (
+        allObjectsBroken &&
+        bubbleBroken
+    );
+
+}
+
+
+// =================================
+// Show ending
+// =================================
+
+function checkShelfEnding() {
+
+    if (
+        areAllShelfObjectsBroken() &&
+        localStorage.getItem(
+            "shelfBroken"
+        ) !== "true"
+    ) {
+
+        shelfEnding.classList.add(
+            "show"
+        );
+
+        setTimeout(
+            typeShelfEndingText,
+            1500
+        );
+        
+    }
+
+}
+
+
+
+// =================================
+// Hammer click-to-pick interaction
+// =================================
+
+let hammerPicked = false;
+
+let hammerFollowing =
+    false;
+
+let hammerOffsetX = 0;
+let hammerOffsetY = 0;
+
+
+// =================================
+// Click hammer to pick up or put down
+// =================================
+
+shelfHammer.addEventListener(
+    "pointerdown",
+    function (event) {
+
+        event.preventDefault();
+
+        const rect =
+            shelfHammer.getBoundingClientRect();
+
+
+        // Click hammer to pick it up
+
+        if (
+            !hammerFollowing
+        ) {
+
+            hammerPicked = true;
+
+            hammerFollowing = true;
+
+            shelfHammer.classList.add(
+                "picked"
+            );
+
+            shelfHammer.style.left =
+                rect.left + "px";
+
+            shelfHammer.style.top =
+                rect.top + "px";
+
+            shelfHammer.style.bottom =
+                "auto";
+
+            hammerOffsetX =
+                event.clientX - rect.left;
+
+            hammerOffsetY =
+                event.clientY - rect.top;
+
+            shelfHands.classList.add(
+                "exit"
+            );
+
+            shelfSpaceHint.classList.add(
+                "show"
+            );
+
+            return;
+
+        }
+
+
+        // Click hammer again to put it down
+
+        hammerFollowing = false;
+
+        shelfHammer.classList.remove(
+            "picked"
+        );
+
+        shelfSpaceHint.classList.remove(
+            "show"
+        );
+
+    }
+);
+
+
+// =================================
+// Hammer follows mouse
+// =================================
+
+document.addEventListener(
+    "mousemove",
+    function (event) {
+
+        if (
+            !hammerPicked ||
+            !hammerFollowing
+        ) {
+            return;
+        }
+
+        shelfHammer.style.left =
+            event.clientX -
+            hammerOffsetX +
+            "px";
+
+        shelfHammer.style.top =
+            event.clientY -
+            hammerOffsetY +
+            "px";
+
+        const hammerRect =
+            shelfHammer.getBoundingClientRect();
+
+        shelfSpaceHint.style.left =
+            hammerRect.left +
+            hammerRect.width / 2 +
+            "px";
+
+        shelfSpaceHint.style.top =
+            hammerRect.top +
+            40 +
+            "px";
+
+
+    }
+);
+
+
+// =================================
+// Spacebar hits shelf
+// =================================
+
+let shelfHitCount = 0;
+
+const requiredShelfHits = 3;
+
+
+// =================================
+// Check whether hammer is over shelf
+// =================================
+
+function isHammerOnShelf() {
+
+    const hammerRect =
+        shelfHammer.getBoundingClientRect();
+
+    const hammerCenterX =
+        hammerRect.left +
+        hammerRect.width / 2;
+
+    const hammerCenterY =
+        hammerRect.top +
+        hammerRect.height / 2;
+
+
+    // Shelf hit area
+    // Adjust these values if needed
+
+    const shelfLeft =
+        window.innerWidth * 0.20;
+
+    const shelfRight =
+        window.innerWidth * 0.80;
+
+    const shelfTop =
+        window.innerHeight * 0.25;
+
+    const shelfBottom =
+        window.innerHeight * 0.90;
+
+
+    return (
+        hammerCenterX >= shelfLeft &&
+        hammerCenterX <= shelfRight &&
+        hammerCenterY >= shelfTop &&
+        hammerCenterY <= shelfBottom
+    );
+
+}
+
+
+// =================================
+// Spacebar hits shelf
+// =================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.code !== "Space"
+        ) {
+            return;
+        }
+
+        if (
+            event.repeat
+        ) {
+            return;
+        }
+
+        if (
+            !hammerPicked
+        ) {
+            return;
+        }
+
+        if (
+            !isHammerOnShelf()
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+
+
+        // Hammer motion
+
+        shelfHammer.classList.remove(
+            "hammer-hit"
+        );
+
+        void shelfHammer.offsetWidth;
+
+        shelfHammer.classList.add(
+            "hammer-hit"
+        );
+
+
+        // Shelf shakes
+
+        shelfHitCount++;
+
+        const shelf =
+            document.querySelector(
+                ".shelf"
+            );
+
+        shelf.classList.remove(
+            "shake"
+        );
+
+        void shelf.offsetWidth;
+
+        shelf.classList.add(
+            "shake"
+        );
+
+
+        if (
+            shelfHitCount >=
+            requiredShelfHits
+        ) {
+
+            setTimeout(
+                breakShelf,
+                250
+            );
+
+        }
+
+    }
+);
+
+
+// =================================
+// Break shelf
+// =================================
+
+function breakShelf() {
+
+    shelfEnding.classList.remove(
+        "show"
+    );
+
+    shelfHammer.style.opacity =
+        "0";
+
+    shelfHammer.style.pointerEvents =
+        "none";
+
+    setTimeout(
+        function () {
+
+            window.location.href =
+                "a-new-start.html";
+
+        },
+        800
+    );
+
+}
+
+
+// =================================
+// Check ending when opening Shelf
+// =================================
+
+checkShelfEnding();
+
+
+
+
+// =================================
+// Check ending when returning to Shelf
+// =================================
+
+window.addEventListener(
+    "pageshow",
+    function () {
+
+        checkShelfEnding();
+
+
+
+    }
+);
+
+// =================================
+// Typewriter effect for shelf dialogue
+// =================================
+
+function typeShelfEndingText() {
+
+    if (shelfTextStarted) return;
+
+    shelfTextStarted = true;
+
+    shelfEndingText.textContent = "";
+
+    let textIndex = 0;
+
+    function typeNextCharacter() {
+
+        if (
+            textIndex >=
+            shelfEndingMessage.length
+        ) {
+            return;
+        }
+
+        shelfEndingText.textContent +=
+            shelfEndingMessage[textIndex];
+
+        textIndex++;
+
+        setTimeout(
+            typeNextCharacter,
+            55
+        );
+
+    }
+
+    typeNextCharacter();
+
+}
+
+// =================================
+// Arrow opens the hammer ending
+// =================================
+
+shelfArrow.addEventListener(
+    "click",
+    function (event) {
+
+        event.stopPropagation();
+
+        if (
+            shelfEnding.classList.contains(
+                "tools-show"
+            )
+        ) {
+            return;
+        }
+
+        shelfEnding.classList.add(
+            "dialogue-exit"
+        );
+
+        setTimeout(
+            function () {
+
+                shelfEnding.classList.add(
+                    "tools-show"
+                );
+
+            },
+            10
+        );
+
+    }
+);

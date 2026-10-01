@@ -280,3 +280,403 @@ body {
     }
 
 }
+
+
+
+/* ================================
+   Ending layer
+================================ */
+
+.shelf-ending {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 30;
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+.shelf-ending.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* ================================
+   Shelf dialogue
+================================ */
+
+.shelf-dialogue {
+    position: absolute;
+
+    left: 50%;
+    bottom: 5%;
+
+    width: 520px;
+    max-width: 72vw;
+
+    transform:
+        translate(-50%, 25px);
+
+    opacity: 0;
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+
+    z-index: 40;
+
+    pointer-events: none;
+}
+
+.shelf-ending.show
+.shelf-dialogue {
+    opacity: 1;
+
+    transform:
+        translate(-50%, 0);
+
+    transition-delay: 0.8s;
+}
+
+
+.shelf-nar {
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+
+/* Text inside dialogue image */
+
+.shelf-ending-text {
+    position: absolute;
+
+    top: 53%;
+    left: 50%;
+
+    width: 100%;
+
+    transform:
+        translate(-50%, -50%)
+        scaleX(0.85);
+
+    margin: 0;
+
+    color: black;
+
+    font-family: "Courier New",sans-serif;
+
+    font-size: 18px;
+    line-height: 1.45;
+    letter-spacing: -1px;
+    font-weight: 400;
+
+    -webkit-text-stroke: 0.25px currentColor;
+
+    text-align: center;
+
+    white-space: normal;
+    white-space: pre-line;
+}
+
+/* ================================
+   Hands
+================================ */
+
+.shelf-hands {
+    position: absolute;
+
+    left: 50%;
+    bottom: -8%;
+
+    width: 320px;
+    height: auto;
+
+    transform:
+        translateX(-50%)
+        translateY(100%);
+
+    opacity: 0;
+
+    transition:
+        transform 1.3s ease,
+        opacity 1s ease;
+
+    pointer-events: none;
+}
+
+.shelf-ending.tools-show
+.shelf-hands {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+
+    transition-delay: 0.6s;
+}
+
+
+/* Hands leave through the same path */
+
+.shelf-ending.tools-show
+.shelf-hands.exit {
+    transform:
+        translateX(-50%)
+        translateY(100%);
+
+    opacity: 0;
+
+    transition:
+        transform 1.3s ease,
+        opacity 1s ease;
+}
+
+/* ================================
+   Hammer
+================================ */
+
+.shelf-hammer {
+    position: absolute;
+
+    left: 42%;
+    bottom: 15%;
+
+    width: 200px;
+    height: auto;
+
+    transform:
+        translateY(130%)
+        rotate(-12deg);
+
+    opacity: 0;
+
+    cursor: grab;
+
+    user-select: none;
+    -webkit-user-drag: none;
+
+    pointer-events: auto;
+
+    transition:
+        transform 1.3s ease,
+        opacity 1s ease;
+}
+
+.shelf-ending.tools-show
+.shelf-hammer {
+    transform:
+        translateY(0)
+        rotate(-12deg);
+
+    opacity: 1;
+
+    transition-delay: 0.8s;
+}
+
+.shelf-hammer:active {
+    cursor: grabbing;
+}
+
+.shelf-hammer.picked {
+    transform:
+        rotate(-12deg);
+
+    transition: none;
+}
+
+
+/* ================================
+   Shelf shaking
+================================ */
+
+.shelf.shake {
+    animation:
+        shelfShake 0.28s ease;
+}
+
+@keyframes shelfShake {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-8px) rotate(-0.5deg);
+    }
+
+    50% {
+        transform: translateX(8px) rotate(0.5deg);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 700px) {
+
+    .shelf-ending-text {
+        top: 16%;
+
+        font-size: 16px;
+    }
+
+    .shelf-hands {
+        width: 280px;
+    }
+
+    .shelf-hammer {
+        width: 105px;
+
+        left: 58%;
+        bottom: 18%;
+    }
+
+}
+
+/* ================================
+   Dialogue exit
+================================ */
+
+.shelf-ending.dialogue-exit
+.shelf-dialogue {
+    opacity: 0;
+
+    transform:
+        translate(-50%, 80px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+
+/* ================================
+   Arrow
+================================ */
+
+.shelf-arrow {
+    position: absolute;
+
+    right: 3%;
+    bottom: 5%;
+
+    width: 55px;
+    height: auto;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.shelf-arrow:hover {
+    transform:
+        translateX(5px)
+        rotate(-5deg);
+
+    opacity: 0.7;
+}
+
+.shelf-ending.dialogue-exit
+.shelf-arrow {
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* ================================
+   Hammer hit motion
+================================ */
+
+.shelf-hammer.hammer-hit {
+    animation:
+        hammerHit 0.35s ease;
+    transform-origin:
+        25% 80%;
+}
+
+@keyframes hammerHit {
+
+    0% {
+        transform:
+            rotate(-12deg)
+            translateY(0);
+    }
+
+    35% {
+        transform:
+            rotate(-45deg)
+            translateY(-18px);
+    }
+
+    70% {
+        transform:
+            rotate(18deg)
+            translateY(12px);
+    }
+
+    100% {
+        transform:
+            rotate(-12deg)
+            translateY(0);
+    }
+
+}
+
+.shelf-space-hint {
+    position: fixed;
+
+    transform:
+        translateX(-50%);
+
+    color: rgb(85, 110, 236);
+
+    font-family: "Courier New", sans-serif;
+
+    font-size: 18px;
+    line-height: 1.45;
+    letter-spacing: -1px;
+    font-weight: 400;
+
+    -webkit-text-stroke: 0.25px currentColor;
+
+    white-space: nowrap;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 50;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+.shelf-space-hint.show {
+    opacity: 1;
+}
