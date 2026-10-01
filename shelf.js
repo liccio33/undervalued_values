@@ -805,6 +805,14 @@ const shelfSpaceHint =
         "shelfSpaceHint"
     );
 
+const shelfSmashSound =
+    new Audio(
+        "assets/audio/SHELF_536777__egomassive__smash.ogg"
+    );
+
+shelfSmashSound.volume =
+    0.8;
+
 const shelfEndingText =
     document.getElementById(
         "shelfEndingText"
@@ -937,6 +945,8 @@ shelfHammer.addEventListener(
     function (event) {
 
         event.preventDefault();
+
+
 
         const rect =
             shelfHammer.getBoundingClientRect();
@@ -1129,6 +1139,28 @@ document.addEventListener(
         }
 
         event.preventDefault();
+
+        shelfSmashSound.currentTime =
+            0;
+
+        const playPromise =
+            shelfSmashSound.play();
+
+        if (
+            playPromise !== undefined
+        ) {
+
+            playPromise.catch(
+                function () {
+
+                    console.log(
+                        "shelf smash sound failed"
+                    );
+
+                }
+            );
+
+        }
 
 
         // Hammer motion
