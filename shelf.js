@@ -1200,7 +1200,7 @@ function breakShelf() {
         function () {
 
             window.location.href =
-                "a.html";
+                "a-new-start.html";
 
         },
         800
