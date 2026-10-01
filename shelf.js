@@ -1228,6 +1228,8 @@ function breakShelf() {
     shelfHammer.style.pointerEvents =
         "none";
 
+    localStorage.clear();
+
     setTimeout(
         function () {
 
