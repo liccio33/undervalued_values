@@ -3,10 +3,6 @@
     cursor: none;
 }
 
-.opening-page.loaded
-.care-text {
-    opacity: 0.1;
-}
 
 #scissorCursor {
     position: fixed;
