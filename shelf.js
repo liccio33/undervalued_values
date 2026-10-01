@@ -1210,14 +1210,7 @@ function breakShelf() {
 // Check ending when opening Shelf
 // =================================
 
-setTimeout(
-    function () {
-
-        checkShelfEnding();
-
-    },
-    100
-);
+checkShelfEnding();
 
 
 
@@ -1230,14 +1223,7 @@ window.addEventListener(
     "pageshow",
     function () {
 
-        setTimeout(
-            function () {
-
-                checkShelfEnding();
-
-            },
-            100
-        );
+        checkShelfEnding();
 
 
 
