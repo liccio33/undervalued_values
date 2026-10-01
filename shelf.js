@@ -894,10 +894,7 @@ function areAllShelfObjectsBroken() {
 function checkShelfEnding() {
 
     if (
-        areAllShelfObjectsBroken() &&
-        localStorage.getItem(
-            "shelfBroken"
-        ) !== "true"
+        areAllShelfObjectsBroken()
     ) {
 
         shelfEnding.classList.add(
@@ -1213,7 +1210,14 @@ function breakShelf() {
 // Check ending when opening Shelf
 // =================================
 
-checkShelfEnding();
+setTimeout(
+    function () {
+
+        checkShelfEnding();
+
+    },
+    100
+);
 
 
 
@@ -1226,7 +1230,14 @@ window.addEventListener(
     "pageshow",
     function () {
 
-        checkShelfEnding();
+        setTimeout(
+            function () {
+
+                checkShelfEnding();
+
+            },
+            100
+        );
 
 
 
