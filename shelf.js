@@ -894,7 +894,10 @@ function areAllShelfObjectsBroken() {
 function checkShelfEnding() {
 
     if (
-        areAllShelfObjectsBroken()
+        areAllShelfObjectsBroken() &&
+        localStorage.getItem(
+            "shelfBroken"
+        ) !== "true"
     ) {
 
         shelfEnding.classList.add(
@@ -1197,7 +1200,7 @@ function breakShelf() {
         function () {
 
             window.location.href =
-                "a-new-start.html";
+                "a.html";
 
         },
         800
