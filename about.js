@@ -18,7 +18,7 @@ const crayonButtons =
     );
 
 let selectedCrayonColor =
-    "#3155d8";
+    null;
 
 let isDrawing =
     false;
@@ -80,6 +80,35 @@ crayonButtons.forEach(
             "click",
             function () {
 
+                const isSelected =
+                    button.classList.contains(
+                        "active"
+                    );
+
+                // Click the selected crayon again
+                // to return to the normal cursor
+
+                if (
+                    isSelected
+                ) {
+
+                    selectedCrayonColor =
+                        null;
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+                    document.body.style.cursor =
+                        "default";
+
+                    return;
+
+                }
+
+
+                // Select a new crayon color
+
                 selectedCrayonColor =
                     button.dataset.color;
 
@@ -96,6 +125,17 @@ crayonButtons.forEach(
                 button.classList.add(
                     "active"
                 );
+
+
+                // Change cursor to the selected crayon
+
+                const crayonImage =
+                    button.querySelector(
+                        "img"
+                    );
+
+                document.body.style.cursor =
+                    `url("${crayonImage.src}") 10 10, crosshair`;
 
             }
         );
@@ -246,6 +286,11 @@ document.addEventListener(
                 "a, button, .crayon-tools"
             );
 
+        if (
+            !selectedCrayonColor
+        ) {
+            return;
+        }
         if (
             blockedElement
         ) {
